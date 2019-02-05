@@ -170,7 +170,7 @@ function service_definition(service)
 
     # Check that signature version is v4...
     @assert service["prefix"] in ["s3", "sdb", "importexport"] ||
-            meta["signatureVersion"] == "v4"
+            meta["signatureVersion"] in ["v4", "s3v4"]
 
     @assert service["prefix"] in ["sdb", "mobileanalytics", "pinpoint"] ||
             haskey(meta, "uid")
