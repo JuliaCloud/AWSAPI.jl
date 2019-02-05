@@ -32,7 +32,7 @@ function start_node_server()
     server_process = run(`$(nodejs_cmd()) -e """
         const http = require('http')
         const port = $tcp_port
-        const h2m = require('$(joinpath(@__DIR__, "node_modules", "to-markdown")')
+        const h2m = require('$(joinpath(@__DIR__, "node_modules", "to-markdown"))')
 
         const requestHandler = (request, response) => {
             if (request.method == 'POST') {
