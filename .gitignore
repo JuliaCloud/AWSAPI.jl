@@ -1,0 +1,6 @@
+Manifest.toml
+node_modules
+package-lock.json
+src/aws-sdk-js
+src/node_modules
+src/package-lock.json

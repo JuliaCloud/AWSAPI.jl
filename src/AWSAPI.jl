@@ -12,11 +12,12 @@
 
 module AWSAPI
 
+include("AWSMetadata.jl")
+include("HTML2MD.jl")
 
-using AWSMetadata
-using HTML2MD
-using DataStructures
-using JSON
+using .AWSMetadata
+using .HTML2MD
+using OrderedCollections
 
 
 sdk_module_name(service_name) = "AWSSDK.$(service_name)"
@@ -477,8 +478,9 @@ function service_generate(name, definition)
     mkpath(dirname(src_path))
     write(src_path, service_interface(definition))
 
-    write(joinpath(@__DIR__, "..", "..", "AWSCoreDoc", "src", "AWSSDK.$name.md"),
-          service_documentation(definition))
+    doc_src = joinpath(@__DIR__, "..", "..", "AWSCoreDoc", "src", "AWSSDK.$name.md")
+    mkpath(doc_src)
+    write(doc_src, service_documentation(definition))
 end
 
 
@@ -497,9 +499,11 @@ function generate_doc(services)
         doc *= "using $(sdk_module_name(s))\n"
     end
 
+    names = map(sdk_module_name, collect(services))
+
     doc *= """
     makedocs(modules = [AWSCore, AWSS3, AWSSES, AWSSQS, AWSSNS,
-                        $(join([sdk_module_name(s) for s in services], ","))],
+                        $(join(names, ","))],
              format = :html,
              sitename = "AWSCore.jl",
              pages = ["AWSCore.jl" => "index.md",
@@ -507,8 +511,7 @@ function generate_doc(services)
                       "AWSSQS.jl" => "AWSSQS.md",
                       "AWSSES.jl" => "AWSSES.md",
                       "AWSSNS.jl" => "AWSSNS.md",
-                      $(join(["\"$m.jl\" => \"$m.md\""
-                              for m in map(sdk_module_name, services)], ","))
+                      $(join(map(m->"\"$m.jl\" => \"$m.md\"", names), ","))
              ])
     """
 
@@ -559,7 +562,7 @@ end # module Services
     sdk_dir = joinpath(@__DIR__, "..", "..", "AWSSDK")
     src_path = joinpath(sdk_dir, "src", "AWSSDK.jl")
     mkpath(dirname(src_path))
-        
+
     write(src_path,
 """
 #==============================================================================#

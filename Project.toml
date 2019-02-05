@@ -1,0 +1,10 @@
+name = "AWSAPI"
+uuid = "dfee916d-5234-5b0a-addb-34d6a40b8f04"
+
+[deps]
+AWSCore = "4f1ea46c-232b-54a6-9b17-cc2d0f3e6598"
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+NodeJS = "2bd173c7-0d6d-553b-b6af-13a54713934c"
+OrderedCollections = "bac558e1-5e72-5ebc-8fee-abe8a469f55d"
+Retry = "20febd7b-183b-5ae2-ac4a-720e7ce64774"

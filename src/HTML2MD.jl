@@ -30,11 +30,11 @@ function start_node_server()
     end
 
     server_process = run(`$(nodejs_cmd()) -e """
-        const http = require('http')  
+        const http = require('http')
         const port = $tcp_port
-        const h2m = require('to-markdown')
+        const h2m = require('$(joinpath(@__DIR__, "node_modules", "to-markdown")')
 
-        const requestHandler = (request, response) => {  
+        const requestHandler = (request, response) => {
             if (request.method == 'POST') {
                 var body = '';
                 request.on('data', function (data) { body += data; });
@@ -73,10 +73,10 @@ function start_node_server()
             });
         }
 
-        http.createServer(requestHandler).listen(port, (err) => {  
-          if (err) {
-            return console.log('HTML2MD Error:', err)
-          }
+        http.createServer(requestHandler).listen(port, (err) => {
+            if (err) {
+                return console.log('HTML2MD Error:', err)
+            }
         })
     """`, wait=false)
 

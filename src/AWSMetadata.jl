@@ -14,7 +14,7 @@ module AWSMetadata
 
 using JSON
 using HTTP
-using DataStructures
+using OrderedCollections
 using Retry
 
 
@@ -25,7 +25,7 @@ github_headers = ["User-Agent" => "https://github.com/JuliaCloud/AWSCore.jl/blob
 
 Parse JSON to OrderedDict to preserve API and documentation order.
 """
-json_parse(d) = JSON.parse(d, dicttype=DataStructures.OrderedDict)
+json_parse(d) = JSON.parse(d, dicttype=OrderedDict)
 
 
 """
