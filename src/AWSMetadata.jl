@@ -18,7 +18,7 @@ using OrderedCollections
 using Retry
 
 
-github_headers = ["User-Agent" => "https://github.com/JuliaCloud/AWSCore.jl/blob/master/src/AWSMetadata.jl"]
+ github_headers = ["User-Agent" => "https://github.com/JuliaCloud/AWSAPI.jl/blob/master/src/AWSMetadata.jl"]
 
 function __init__()
     global github_headers
