@@ -1,6 +1,9 @@
 language: julia
 os:
   - linux
+addons:
+  apt:
+    - tree
 julia:
   - 1.0
 notifications:
