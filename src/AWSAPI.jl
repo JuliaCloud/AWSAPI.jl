@@ -479,7 +479,7 @@ function service_generate(name, definition)
     write(src_path, service_interface(definition))
 
     doc_src = joinpath(@__DIR__, "..", "..", "AWSCoreDoc", "src", "AWSSDK.$name.md")
-    mkpath(doc_src)
+    mkpath(dirname(doc_src))
     write(doc_src, service_documentation(definition))
 end
 

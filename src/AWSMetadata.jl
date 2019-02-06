@@ -18,7 +18,14 @@ using OrderedCollections
 using Retry
 
 
-github_headers = ["User-Agent" => "https://github.com/JuliaCloud/AWSCore.jl/blob/master/src/AWSMetadata.jl"]
+ github_headers = ["User-Agent" => "https://github.com/JuliaCloud/AWSAPI.jl/blob/master/src/AWSMetadata.jl"]
+
+function __init__()
+    global github_headers
+    if haskey(ENV, "GITHUB_OAUTH_TOKEN")
+        push!(github_headers, "Authorization" => "token " * ENV["GITHUB_OAUTH_TOKEN"])
+    end
+end
 
 """
     json_parse(d)

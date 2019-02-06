@@ -15,6 +15,15 @@ export html2md
 using NodeJS
 using HTTP
 
+let deps = joinpath(dirname(@__DIR__), "deps", "deps.jl")
+    if isfile(deps)
+        include(deps)
+    else
+        error("The Node.js dependencies have not been set up properly. Run `]build` and ",
+              "try again.")
+    end
+end
+
 const tcp_port = 34562
 
 server_process = nothing
@@ -25,14 +34,10 @@ function start_node_server()
 
     @assert server_process == nothing
 
-    if !isdir(joinpath(@__DIR__, "node_modules"))
-        run(setenv(`$(npm_cmd()) install to-markdown`, dir=@__DIR__))
-    end
-
     server_process = run(`$(nodejs_cmd()) -e """
         const http = require('http')
         const port = $tcp_port
-        const h2m = require('$(joinpath(@__DIR__, "node_modules", "to-markdown")')
+        const h2m = require('$(joinpath(NPM_DIR, "to-markdown"))')
 
         const requestHandler = (request, response) => {
             if (request.method == 'POST') {
