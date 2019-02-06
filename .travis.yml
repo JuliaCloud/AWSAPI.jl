@@ -3,6 +3,7 @@ os:
   - linux
 addons:
   apt:
+    packages:
     - tree
 julia:
   - 1.0
